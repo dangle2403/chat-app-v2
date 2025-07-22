@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { BsChatLeftTextFill } from "react-icons/bs";
 import { useState } from "react";
+import LogoutButton from "./LogoutButton.jsx";
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -55,7 +56,8 @@ const Navbar = () => {
           </div>
 
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-            <button className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:ring-2 focus:ring-white">
+            <LogoutButton />
+            <button className="relative ml-2 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:ring-2 focus:ring-white">
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
