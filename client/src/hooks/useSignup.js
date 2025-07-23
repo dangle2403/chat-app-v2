@@ -1,6 +1,6 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { useAuthContext } from "../contest/AuthContext";
+import { useAuthContext } from "../context/AuthContext";
 
 function handleInputsError(inputs) {
   if (
@@ -62,9 +62,9 @@ const useSignup = () => {
         throw new Error(data.error);
       }
       // localstorage
-      localStorage.setItem("chat-user", JSON.stringify(data));
+      localStorage.setItem("chat-user", JSON.stringify(data.user));
       // update auth context
-      setAuthUser(data);
+      setAuthUser(data.user);
 
       toast.success("Signup successful!");
     } catch (error) {

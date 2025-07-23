@@ -1,4 +1,4 @@
-import { useAuthContext } from "../contest/AuthContext";
+import { useAuthContext } from "../context/AuthContext";
 import useLogout from "../hooks/useLogout";
 
 const LogoutButton = () => {
@@ -8,7 +8,11 @@ const LogoutButton = () => {
     <>
       <button
         className={`
-        ${!authUser ? "hidden btn-disabled" : "relative cursor-pointer hover:bg-blue-400 btn-outline bg-blue-600 rounded-lg text-white px-3 py-1"}`}
+        ${
+          !authUser
+            ? "hidden btn-disabled"
+            : "relative cursor-pointer hover:bg-blue-400 btn-outline bg-blue-600 rounded-lg text-white px-3 py-1"
+        }`}
         onClick={logout}
       >
         {loading ? "Logging out..." : "Logout"}

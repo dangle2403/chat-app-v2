@@ -1,6 +1,6 @@
 import toast from "react-hot-toast";
 import { useState } from "react";
-import { useAuthContext } from "../contest/AuthContext";
+import { useAuthContext } from "../context/AuthContext";
 
 const useLogin = () => {
   const [loading, setLoading] = useState(false);
@@ -15,14 +15,18 @@ const useLogin = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(inputs),
+        body: JSON.stringify(
+          inputs.usernameOrEmail.includes("@")
+            ? { email: inputs.usernameOrEmail, password: inputs.password }
+            : { username: inputs.usernameOrEmail, password: inputs.password }
+        ),
       });
       const data = await res.json();
       if (data.error) {
         throw new Error(data.error);
       }
-      localStorage.setItem("chat-user", JSON.stringify(data));
-      setAuthUser(data);
+      localStorage.setItem("chat-user", JSON.stringify(data.user));
+      setAuthUser(data.user);
       toast.success("Login successful");
     } catch (error) {
       console.error("Error in useLogin hook:", error);

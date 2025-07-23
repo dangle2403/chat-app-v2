@@ -3,19 +3,31 @@ import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 
 export const signup = async (req, res) => {
-  const { fullName, username, email, password, confirmPassword, gender } = req.body;
+  const { fullName, username, email, password, confirmPassword, gender } =
+    req.body;
   try {
     // Validate input
-    if (!fullName || !username || !email || !password || !confirmPassword || !gender) {
+    if (
+      !fullName ||
+      !username ||
+      !email ||
+      !password ||
+      !confirmPassword ||
+      !gender
+    ) {
       return res.status(400).json({ message: "All fields are required" });
     }
 
     if (fullName.length < 3) {
-      return res.status(400).json({ message: "Full name must be at least 3 characters long" });
+      return res
+        .status(400)
+        .json({ message: "Full name must be at least 3 characters long" });
     }
 
     if (username.length < 3) {
-      return res.status(400).json({ message: "Username must be at least 3 characters long" });
+      return res
+        .status(400)
+        .json({ message: "Username must be at least 3 characters long" });
     }
 
     if (password.length < 6) {
@@ -62,7 +74,7 @@ export const signup = async (req, res) => {
           fullName: newUser.fullName,
           username: newUser.username,
           email: newUser.email,
-          profilePicture: newUser.  profilePicture
+          profilePicture: newUser.profilePicture,
         },
       });
     } else {
@@ -86,7 +98,7 @@ export const login = async (req, res) => {
       return res.status(400).json({ message: "Password is required" });
     }
 
-    const user = await User.findOne({$or: [{ email }, { username }] });
+    const user = await User.findOne({ $or: [{ email }, { username }] });
     if (!user) {
       return res.status(400).json({ message: "User not found" });
     }
