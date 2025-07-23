@@ -6,7 +6,7 @@ export const SocketContext = createContext();
 
 export const useSocketContext = () => {
   return useContext(SocketContext);
-}
+};
 
 export const SocketContextProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
@@ -15,15 +15,15 @@ export const SocketContextProvider = ({ children }) => {
 
   useEffect(() => {
     if (authUser) {
-      const socketConnection = io("http://localhost:8000", {
+      const socketConnection = io(window.location.origin, {
         query: { userId: authUser._id },
       });
       setSocket(socketConnection);
-      
+
       socketConnection.on("getOnlineUsers", (users) => {
         setOnlineUsers(users);
       });
-      
+
       return () => {
         socketConnection.close();
       };
