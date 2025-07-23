@@ -1,7 +1,11 @@
 import { IoMdClose } from "react-icons/io";
 import useConversation from "../../zustand/useConversation";
+import { useSocketContext } from "../../context/socketContext";
 const ChatHeader = () => {
   const { selectedConversation } = useConversation();
+  const { onlineUsers } = useSocketContext();
+  const isOnline = onlineUsers.includes(selectedConversation._id);
+  console.log(onlineUsers)
   return (
     <div className="p-2 border-b border-base-300 ">
       <div className="flex items-center justify-between">
@@ -18,7 +22,7 @@ const ChatHeader = () => {
           {/* User infor */}
           <div>
             <h2 className="font-medium">{selectedConversation.fullName}</h2>
-            <p className="text-sm text-base-content/70">Online</p>
+            <p className="text-sm text-base-content/70">{isOnline ? "Online" : "Offline"}</p>
           </div>
         </div>
         {/* close button */}

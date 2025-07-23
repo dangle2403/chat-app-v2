@@ -5,12 +5,15 @@ import useConversation from "../../zustand/useConversation";
 import useGetMessage from "../../hooks/useGetMessage";
 import { useAuthContext } from "../../context/AuthContext";
 import { useEffect, useRef } from "react";
+import useListenMessage from "../../hooks/useListenMessage";
 
 const ChatContainer = () => {
+  useListenMessage();
   const { selectedConversation } = useConversation();
   const { loading, messages } = useGetMessage();
   const { authUser } = useAuthContext();
   const lastMessageRef = useRef();
+
   useEffect(() => {
     setTimeout(() => {
       lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });

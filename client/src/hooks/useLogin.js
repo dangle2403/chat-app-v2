@@ -21,7 +21,12 @@ const useLogin = () => {
             : { username: inputs.usernameOrEmail, password: inputs.password }
         ),
       });
+
       const data = await res.json();
+      if (!res.ok) {
+        toast.error(data.message || "Login failed");
+        return;
+      }
       if (data.error) {
         throw new Error(data.error);
       }
@@ -30,7 +35,7 @@ const useLogin = () => {
       toast.success("Login successful");
     } catch (error) {
       console.error("Error in useLogin hook:", error);
-      toast.error("Login failed. Please check your credentials.");
+      toast.error("Login failed.");
     } finally {
       setLoading(false);
     }

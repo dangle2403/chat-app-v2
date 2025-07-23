@@ -2,10 +2,13 @@ import SearchInput from "../SearchInput";
 import { FaRegUser } from "react-icons/fa";
 import useGetConversation from "../../hooks/useGetConversation";
 import useConversation from "../../zustand/useConversation";
+import { useSocketContext } from "../../context/socketContext";
 
 const Sidebar = () => {
   const { loading, conversations } = useGetConversation();
   const { selectedConversation, setSelectedConversation } = useConversation();
+  const { onlineUsers } = useSocketContext();
+
   return (
     <aside className="h-full w-20 lg:w-72 border-r border-base-300 flex flex-col transition-all duration-200">
       <div className="border-b border-base-300 w-full p-4">
@@ -22,6 +25,7 @@ const Sidebar = () => {
           ) : (
             conversations.map((conversation) => {
               const isSelected = selectedConversation?._id === conversation._id;
+              const isOnline = onlineUsers.includes(conversation._id);
               return (
                 <div key={conversation._id} className="mb-2">
                   <button
@@ -36,8 +40,10 @@ const Sidebar = () => {
                         className="size-12 object-cover rounded-full"
                       />
                       <span
-                        className="absolute bottom-0 right-0 size-3 bg-green-500
-                          rounded-full ring-2 ring-zinc-900 mr-2"
+                        className={`absolute bottom-0 right-0 size-3 ${
+                          isOnline ? "bg-green-500" : "bg-gray-400"
+                        }
+                          rounded-full ring-2 ring-zinc-900 mr-2`}
                       ></span>
                     </div>
 
